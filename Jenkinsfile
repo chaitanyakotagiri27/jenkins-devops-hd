@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node18'
+        nodejs 'Node18'  // Make sure this name matches what you set in Jenkins
     }
 
     stages {
@@ -23,13 +23,13 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo 'Running tests...'
-                bat 'npm test'
+                bat 'node_modules\\.bin\\mocha test\\test.js'
             }
         }
 
         stage('Security Scan') {
             steps {
-                echo 'Running security audit...'
+                echo 'Running npm audit...'
                 bat 'npm audit'
             }
         }
@@ -43,14 +43,14 @@ pipeline {
 
         stage('Deploy Locally') {
             steps {
-                echo 'Deploying container locally...'
+                echo 'Deploying app locally using Docker...'
                 bat 'docker run -d -p 4000:4000 devops-hd-app'
             }
         }
 
         stage('Monitoring') {
             steps {
-                echo 'Monitoring logic placeholder.'
+                echo 'Monitoring stage (placeholder for tools like Prometheus, etc.)'
             }
         }
     }
