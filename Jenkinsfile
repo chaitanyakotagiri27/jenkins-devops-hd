@@ -1,10 +1,15 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'Node18'
+    }
+
     stages {
         stage('Checkout') {
             steps {
                 echo 'Code checked out from GitHub.'
+                checkout scm
             }
         }
 
@@ -17,36 +22,35 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                echo 'Running unit tests...'
-                bat 'npm test || echo Tests may have failed'
+                echo 'Running tests...'
+                bat 'npm test'
             }
         }
 
         stage('Security Scan') {
             steps {
-                echo 'Running npm audit...'
-                bat 'npm audit || echo Security scan completed'
+                echo 'Running security audit...'
+                bat 'npm audit'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                bat 'docker build -t devops-hd .'
+                bat 'docker build -t devops-hd-app .'
             }
         }
 
         stage('Deploy Locally') {
             steps {
-                echo 'Deploying app in container...'
-                bat 'docker run -d -p 3000:4000 devops-hd'
+                echo 'Deploying container locally...'
+                bat 'docker run -d -p 4000:4000 devops-hd-app'
             }
         }
 
         stage('Monitoring') {
             steps {
-                echo 'Checking if app is running...'
-                bat 'curl http://localhost:3000 || echo App not reachable'
+                echo 'Monitoring logic placeholder.'
             }
         }
     }
