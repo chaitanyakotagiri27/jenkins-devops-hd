@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My App</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+<body>
+    <div class="loader-container" id="loader">
+        <svg width="60" height="60" viewBox="0 0 50 50">
+            <g fill="none" stroke="#60A5FA" stroke-width="2">
+                <g>
+                    <rect x="10" y="10" width="30" height="6" rx="1">
+                        <animate attributeName="opacity" values="0.3;1;0.3" dur="1s" begin="0s" repeatCount="indefinite"></animate>
+                    </rect>
+                    <circle cx="35" cy="13" r="1" fill="#60A5FA">
+                        <animate attributeName="fill" values="#60A5FA;#00ff00;#60A5FA" dur="1s" begin="0s" repeatCount="indefinite"></animate>
+                    </circle>
+                </g>
+                <!-- Additional animated elements... -->
+            </g>
+        </svg>
+    </div>
+
+    <div class="container animate__animated animate__fadeIn" id="content" style="display: none;">
+        <h1><%= message %></h1>
+        <p class="description">Welcome to my app! Click a button below to interact.</p>
+        <div class="button-container">
+            <button class="btn" id="willButton">Say Hello</button>
+            <button class="btn" id="readyButton">Check Status</button>
+        </div>
+    </div>
+
+    <script src="/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
