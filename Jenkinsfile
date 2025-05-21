@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs "NodeJS18"
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -14,7 +10,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                echo 'Installing dependencies...'
+                echo 'Installing dependencies using npm...'
                 sh 'npm install'
             }
         }
@@ -28,7 +24,7 @@ pipeline {
 
         stage('Security Scan') {
             steps {
-                echo 'Checking for vulnerabilities...'
+                echo 'Running npm audit...'
                 sh 'npm audit || true'
             }
         }
@@ -42,7 +38,7 @@ pipeline {
 
         stage('Deploy Locally') {
             steps {
-                echo 'Running Docker container...'
+                echo 'Deploying app with Docker...'
                 sh 'docker run -d -p 3000:4000 devops-hd'
             }
         }
@@ -50,7 +46,7 @@ pipeline {
         stage('Monitoring') {
             steps {
                 echo 'Checking app health...'
-                sh 'curl -f http://localhost:3000 || echo "App is not reachable"'
+                sh 'curl -f http://localhost:3000 || echo "App not reachable"'
             }
         }
     }
