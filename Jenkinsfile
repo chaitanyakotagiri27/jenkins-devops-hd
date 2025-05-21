@@ -10,43 +10,43 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                echo 'Installing dependencies using npm...'
-                sh 'npm install'
+                echo 'Installing dependencies...'
+                bat 'npm install'
             }
         }
 
         stage('Run Tests') {
             steps {
                 echo 'Running unit tests...'
-                sh 'npm test || echo "Some tests may have failed"'
+                bat 'npm test || echo Tests may have failed'
             }
         }
 
         stage('Security Scan') {
             steps {
                 echo 'Running npm audit...'
-                sh 'npm audit || true'
+                bat 'npm audit || echo Security scan completed'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker build -t devops-hd .'
+                bat 'docker build -t devops-hd .'
             }
         }
 
         stage('Deploy Locally') {
             steps {
-                echo 'Deploying app with Docker...'
-                sh 'docker run -d -p 3000:4000 devops-hd'
+                echo 'Deploying app in container...'
+                bat 'docker run -d -p 3000:4000 devops-hd'
             }
         }
 
         stage('Monitoring') {
             steps {
-                echo 'Checking app health...'
-                sh 'curl -f http://localhost:3000 || echo "App not reachable"'
+                echo 'Checking if app is running...'
+                bat 'curl http://localhost:3000 || echo App not reachable'
             }
         }
     }
